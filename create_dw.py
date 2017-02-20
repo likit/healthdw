@@ -54,7 +54,7 @@ class Customer(Base):
     company = relationship('Company', backref=backref('customers'))
     firstname = Column(String(64), index=True)
     lastname = Column(String(64), index=True)
-    gender = Column(Integer) # 0=male, 1=female, 2=unknown
+    gender = Column(Integer) # 1=male, 2=female, 3=unknown
     age = Column(Integer)
 
 class TextResult(Base):
