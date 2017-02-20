@@ -2,14 +2,12 @@ from sqlalchemy import (create_engine, Table, Column,
                             Integer, Numeric, String, DateTime,
                             Boolean, ForeignKey)
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchem.orm import sessionmaker, backref, relationship
+from sqlalchemy.orm import sessionmaker, backref, relationship
 
 #creating engine for a local postgresql database
-engine = create_engine('postgresql+psycopg2://likit@localhost/healthdw_dev')
+dw_engine = create_engine('postgresql+psycopg2://likit@localhost/healthdw_dev')
 
 Base = declarative_base()
-Session = sessionmaker(bind=engine)
-session = Session()
 
 class Fact(Base):
     __tablename__ = 'facts'
@@ -60,8 +58,8 @@ class Customer(Base):
     age = Column(Integer)
 
 class TextResult(Base):
-    __tablename__ = 'testresults'
+    __tablename__ = 'textresults'
     id = Column(Integer, primary_key=True)
     result = Column(String(128))
 
-Base.metadata.create_all(engine)
+Base.metadata.create_all(dw_engine)
