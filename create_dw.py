@@ -14,6 +14,7 @@ class Fact(Base):
     fact_id = Column(Integer, primary_key=True)
     service_date_id = Column(Integer, ForeignKey('dates.date_id'))
     customer_id = Column(Integer, ForeignKey('customers.customer_id'))
+    company_id = Column(Integer, ForeignKey('companies.company_id'))
     customer = relationship('Customer', backref=backref('tests'))
     test_id = Column(Integer, ForeignKey('tests.test_id'))
     num_value = Column(Numeric())
@@ -50,8 +51,6 @@ class Test(Base):
 class Customer(Base):
     __tablename__ = 'customers'
     customer_id = Column(Integer, primary_key=True)
-    company_id = Column(Integer, ForeignKey('companies.company_id'))
-    company = relationship('Company', backref=backref('customers'))
     firstname = Column(String(64), index=True)
     lastname = Column(String(64), index=True)
     gender = Column(Integer) # 1=male, 2=female, 3=unknown
