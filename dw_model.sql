@@ -57,6 +57,7 @@ CREATE TABLE companies
 CREATE TABLE tests
 (
   test_id serial NOT NULL,
+  test_code varchar(32) NOT NULL,
   description varchar(90) NOT NULL,
   coverage_type varchar(90),
   unit varchar(45),
@@ -83,3 +84,5 @@ CREATE TABLE results
   CONSTRAINT results_companyId_fk FOREIGN KEY(company_id) REFERENCES companies(company_id),
   CONSTRAINT results_testId_fk FOREIGN KEY(test_id) REFERENCES tests(test_id)
 );
+
+CREATE INDEX tests_test_code_index ON tests(test_code);
