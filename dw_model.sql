@@ -6,13 +6,15 @@ CREATE TABLE dates
 (
   date_id integer NOT NULL,
   day integer NOT NULL,
-  month integer NOT NULL,
+  month_no integer NOT NULL,
   gregorian_year integer NOT NULL,
-  day_of_Week integer,
-  day_of_year integer,
-  fiscal_year integer,
-  weekday integer,
-  buddhist_year integer,
+  quarter integer NOT NULL,
+  day_of_Week integer NOT NULL,
+  day_of_year integer NOT NULL,
+  fiscal_year integer NOT NULL,
+  weekday varchar(16) NOT NULL,
+  month varchar(16) NOT NULL,
+  buddhist_year integer NOT NULL,
   CONSTRAINT dates_pk PRIMARY KEY (date_id)
   );
 
