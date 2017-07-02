@@ -25,6 +25,7 @@ CREATE TABLE dates
   last_name varchar(45),
   full_name varchar(90),
   gender varchar(6) NOT NULL,
+  cms_code integer NOT NULL,
   CONSTRAINT customers_pk PRIMARY KEY (customer_id)
   );
 
@@ -38,7 +39,8 @@ CREATE TABLE affiliations
 CREATE TABLE companies
 (
   company_id serial NOT NULL,
-  name varchar(45) NOT NULL,
+  company_code integer NOT NULL,
+  name varchar(128) NOT NULL,
   street_Addr varchar(90),
   district varchar(45),
   subdistrict varchar(45),
