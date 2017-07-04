@@ -25,13 +25,13 @@ CREATE TABLE dates
   last_name varchar(45),
   full_name varchar(90),
   gender varchar(6) NOT NULL,
-  cms_code integer NOT NULL,
+  customer_code integer NOT NULL,
   CONSTRAINT customers_pk PRIMARY KEY (customer_id)
   );
 
 CREATE TABLE affiliations
 (
-  affiliation_id integer,
+  affiliation_id serial NOT NULL,
   name varchar(90),
   CONSTRAINT affiliations_pk PRIMARY KEY (affiliation_id)
 );
@@ -74,6 +74,7 @@ CREATE TABLE results
 (
   result_id serial NOT NULL,
   service_date_id integer NOT NULL,
+  service_code varchar(16) NOT NULL,
   customer_id integer NOT NULL,
   company_id integer NOT NULL,
   test_id integer NOT NULL,
@@ -88,3 +89,6 @@ CREATE TABLE results
 );
 
 CREATE INDEX tests_test_code_index ON tests(test_code);
+CREATE INDEX companies_company_code_index ON companies(company_code);
+CREATE INDEX customers_customer_code_index ON customers(customer_code);
+CREATE INDEX results_service_code_index ON results(service_code);
