@@ -96,12 +96,13 @@ def predict_forward(df, txm, states, values, pctchange_col, nyears=1):
 @click.command()
 @click.argument('test')
 @click.argument('years')
+@click.option('--step', help='step', default='20', type=int)
 @click.option('--db', help='database')
 @click.option('--username', help='database username')
 @click.option('--dbhost', help='database host', default='localhost')
 @click.option('--minage', help='minimum age', default='25', type=int)
 @click.option('--maxage', help='maximum age', default='55', type=int)
-def main(test, years, db, dbhost, username, minage, maxage):
+def main(test, years, db, dbhost, username, minage, maxage, step):
     print('Parameters:\n\tTest: {}, Years: {}, DB: {}, DBHost: {}'.format(test, years, db, dbhost))
     if not db:
         db = 'healthdw20161216'  # just for convenience, not used in production
@@ -119,7 +120,8 @@ def main(test, years, db, dbhost, username, minage, maxage):
         try:
             test_id = df[df['test_code']==test.upper()].test_id.iloc[0]
         except IndexError:
-            print('{} not found.'.format(test))
+            print('\t{} not found.'.format(test))
+            raise SystemExit
 
 
         years = [int(year) for year in years.split(',')]
@@ -133,7 +135,7 @@ def main(test, years, db, dbhost, username, minage, maxage):
             kwargs = {column: lambda x: (x[nextyear] - x[curyear])*100/x[curyear]}
             flt_regcust = flt_regcust.assign(**kwargs)
 
-        states = np.arange(-50, 100, 10)
+        states = np.arange(-50, 100, step)
         states_labels = [str(s) for s in states][1:]
 
         # needs to iterate all pct changes
@@ -148,7 +150,7 @@ def main(test, years, db, dbhost, username, minage, maxage):
         pcts = ['pctchange{}cat'.format(i+1) for i in range(len(years)-1)]
         matrices = cal_transition_prob(flt_regcust, states_labels, pcts)
         txm = pd.DataFrame(matrices, columns=states_labels, index=states_labels).T
-        txm.to_csv('{}_mat_{}-{}.csv'.format(test,years[0], years[-1]))
+        txm.to_csv('{}_mat_{}_{}-{}.csv'.format(test, step, years[0], years[-1]))
 
 
 
